@@ -2,15 +2,15 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'tblcliente' })
 export class Cliente {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'idcliente', type: 'int4' })
   idcliente: number;
 
-  @Column()
+  @Column({ name: 'numerocliente', type: 'int8' })
   numerocliente: number;
 
-  @Column()
+  @Column({ name: 'nomecliente', type: 'varchar' })
   nomecliente: string;
 
-  @Column()
+  @Column({ name: 'statuscliente', type: 'int4' })
   statuscliente: number;
 }
