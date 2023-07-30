@@ -8,8 +8,8 @@ export class Fatura {
   @PrimaryGeneratedColumn({ name: 'idfatura', type: 'int4' })
   idfatura: number;
 
-  @Column({ name: 'fkidcliente', type: 'int4' })
-  fkidcliente: number;
+  @Column({ name: 'uccliente', type: 'int4' })
+  uccliente: number;
 
   @Column({ name: 'mesfatura', type: 'varchar' })
   mesfatura: string;
@@ -59,7 +59,7 @@ export class Fatura {
   precoenergiainjetadafaturaFormatado: string;
   precoenergiacompensadafaturaFormatado: string;
 
-  @ManyToOne(() => Cliente, (cliente) => cliente.idcliente)
-  @JoinColumn({ name: 'fkidcliente' })
-  cliente: Cliente;
+  // @ManyToOne(() => Cliente, (cliente) => cliente.idcliente)
+  // @JoinColumn({ name: 'fkidcliente' })
+  // cliente: Cliente;
 }

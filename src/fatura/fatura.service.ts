@@ -22,9 +22,10 @@ export class FaturaService {
 
   async findAll(): Promise<Fatura[]> {
     const faturas = await this.faturaRepository.find({ 
-      relations: ['cliente'],
+      // relations: ['cliente'],
       select: [
         'idfatura',
+        'uccliente',
         'mesfatura',
         'datavencimentofatura',
         'valorenergiaeletricafatura',
@@ -53,5 +54,9 @@ export class FaturaService {
     });
 
     return faturas;
+  }
+
+  async create(fatura: Fatura): Promise<Fatura> {
+    return this.faturaRepository.save(fatura);
   }
 }

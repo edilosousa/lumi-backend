@@ -7,7 +7,9 @@ import { ClienteController } from './cliente/cliente.controller'
 import { Fatura } from './fatura/fatura.entity'
 import { FaturaService } from './fatura/fatura.service'
 import { FaturaController } from './fatura/fatura.controller'
-
+import { Unidade } from './unidade/unidade.entity'
+import { UnidadeService } from './unidade/unidade.service'
+import { UnidadeController } from './unidade/unidade.controller'
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -20,14 +22,14 @@ import { FaturaController } from './fatura/fatura.controller'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true, // Carrega automaticamente as entidades (modelos) do TypeORM
       synchronize: false, // Sincroniza automaticamente o esquema do banco de dados com as entidades (somente para desenvolvimento)
-      entities: [Cliente, Fatura],
+      entities: [Cliente, Fatura, Unidade],
       logging: true,
       schema: 'dblumi',
     }),
-    TypeOrmModule.forFeature([Cliente, Fatura])
+    TypeOrmModule.forFeature([Cliente, Fatura, Unidade])
   ],
-  controllers: [ClienteController, FaturaController],
-  providers: [ClienteService, FaturaService],
+  controllers: [ClienteController, FaturaController, UnidadeController],
+  providers: [ClienteService, FaturaService, UnidadeService],
 })
 export class AppModule {}
 
