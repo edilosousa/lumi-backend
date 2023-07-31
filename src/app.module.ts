@@ -13,13 +13,22 @@ import { UnidadeController } from './unidade/unidade.controller'
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    // TypeOrmModule.forRoot({
+    //   type: 'postgres',
+    //   host: process.env.DB_HOST,
+    //   port: parseInt(process.env.DB_PORT, 10),
+    //   username: process.env.DB_USERNAME,
+    //   password: process.env.DB_PASSWORD,
+    //   database: process.env.DB_DATABASE,
+    //   autoLoadEntities: true, // Carrega automaticamente as entidades (modelos) do TypeORM
+    //   synchronize: false, // Sincroniza automaticamente o esquema do banco de dados com as entidades (somente para desenvolvimento)
+    //   entities: [Cliente, Fatura, Unidade],
+    //   logging: true,
+    //   schema: 'dblumi',
+    // }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT, 10),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      url: process.env.DB_URL,
       autoLoadEntities: true, // Carrega automaticamente as entidades (modelos) do TypeORM
       synchronize: false, // Sincroniza automaticamente o esquema do banco de dados com as entidades (somente para desenvolvimento)
       entities: [Cliente, Fatura, Unidade],

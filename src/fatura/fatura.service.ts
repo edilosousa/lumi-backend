@@ -60,6 +60,7 @@ export class FaturaService {
       fatura.precoenergiaeletricafaturaFormatado = this.formatarPrecoEnergia(fatura.precounitenergiaeletricafatura);
       fatura.precoenergiainjetadafaturaFormatado = this.formatarPrecoEnergia(fatura.precounitenergiainjetadafatura);
       fatura.precoenergiacompensadafaturaFormatado = this.formatarPrecoEnergia(fatura.precounitenergiacompensadafatura);
+      
     });
 
     return faturas;
