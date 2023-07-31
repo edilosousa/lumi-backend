@@ -16,6 +16,10 @@ export class FaturaService {
     return (valor / 100).toFixed(2).replace('.', ',');
   }
 
+  private formatarValorEnergia2(valor: number): string {
+    return (valor / 100).toFixed(10).replace('.', ',');
+  }
+
   private formatarPrecoEnergia(valor: number): string {
     return (valor / 100000000).toFixed(8).replace('.', ',');
   }
@@ -44,13 +48,13 @@ export class FaturaService {
     // Formatando os valores de energia elétrica
     faturas.forEach((fatura) => {
       fatura.valorenergiaeletricafaturaFormatado  = this.formatarValorEnergia(fatura.valorenergiaeletricafatura);
-      fatura.valorenergiainjetadafaturaFormatado= this.formatarValorEnergia(fatura.valorenergiainjetadafatura);
-      fatura.valorenergiacompensadafaturaFormatado = this.formatarValorEnergia(fatura.valorenergiacompensadafatura);
-      fatura.valoriluminacaopublicafaturaFormatado = this.formatarValorEnergia(fatura.valoriluminacaopublicafatura);
-      fatura.valortotalfaturaFormatado = this.formatarValorEnergia(fatura.valortotalfatura);
-      fatura.precoenergiaeletricafaturaFormatado = this.formatarPrecoEnergia(fatura.precounitenergiaeletricafatura);
-      fatura.precoenergiainjetadafaturaFormatado = this.formatarPrecoEnergia(fatura.precounitenergiainjetadafatura);
-      fatura.precoenergiacompensadafaturaFormatado = this.formatarPrecoEnergia(fatura.precounitenergiacompensadafatura);
+      fatura.valorenergiainjetadafaturaFormatado= this.formatarValorEnergia2(fatura.valorenergiainjetadafatura);
+      // fatura.valorenergiacompensadafaturaFormatado = this.formatarValorEnergia(fatura.valorenergiacompensadafatura);
+      // fatura.valoriluminacaopublicafaturaFormatado = this.formatarValorEnergia(fatura.valoriluminacaopublicafatura);
+      // fatura.valortotalfaturaFormatado = this.formatarValorEnergia(fatura.valortotalfatura);
+      // fatura.precoenergiaeletricafaturaFormatado = this.formatarPrecoEnergia(fatura.precounitenergiaeletricafatura);
+      // fatura.precoenergiainjetadafaturaFormatado = this.formatarPrecoEnergia(fatura.precounitenergiainjetadafatura);
+      // fatura.precoenergiacompensadafaturaFormatado = this.formatarPrecoEnergia(fatura.precounitenergiacompensadafatura);
     });
 
     return faturas;

@@ -1,5 +1,5 @@
 
-import { Controller, Get, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, UploadedFiles, UseInterceptors, HttpCode } from '@nestjs/common';
 import { FaturaService } from './fatura.service';
 import { Fatura } from './fatura.entity';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
@@ -19,37 +19,26 @@ export class FaturaController {
     return this.faturaService.findAll();
   }
 
-  @Post('upload')
+  @Post('/upload')
   @UseInterceptors(AnyFilesInterceptor())
-  async uploadFiles(@UploadedFiles() pdfFiles: Express.Multer.File[]): Promise<string[]> {
-    // Implemente aqui a lógica para processar e salvar os arquivos PDF
-    // Use o array "pdfFiles" que contém os arquivos enviados pelo cliente
-
-    // console.log('Arquivos recebidos:', pdfFiles);
-
-    // Crie o diretório 'uploads' se ele ainda não existir
+  @HttpCode(200)
+  async uploadFiles(@UploadedFiles() pdfFiles: Express.Multer.File[]): Promise<{message: string}> {
     const storagePath = path.resolve(process.cwd(), 'uploads');
     console.log(storagePath);
     if (!fs.existsSync(storagePath)) {
       fs.mkdirSync(storagePath, { recursive: true });
     }
-
-    // Implemente aqui a lógica para processar e salvar os arquivos PDF
-    // Use o array "pdfFiles" que contém os arquivos enviados pelo cliente
-
-    // Exemplo: Para salvar os arquivos na pasta 'uploads'
     const uploadedFilesPaths = [];
     for (const pdfFile of pdfFiles) {
       const uniqueFileName = `${pdfFile.originalname}`;
       const filePath = path.join(storagePath, uniqueFileName);
-
       fs.writeFileSync(filePath, pdfFile.buffer);
       uploadedFilesPaths.push(filePath);
     }
-    return uploadedFilesPaths;
+    await this.lerPDF()
+    return { message: 'Success' };
   }
   
-  @Get('/ler-pdf')
   async lerPDF(): Promise<any> {
     const pdfCaminhos = this.listFiles('./uploads');
 
@@ -336,19 +325,19 @@ export class FaturaController {
   for (const resultItem of aggregatedResultsArray) {
     const fatura = new Fatura();
     fatura.uccliente = resultItem.dadosCliente['uc'];
-    // fatura.mesfatura = resultItem.mesDeReferencia;
-    // fatura.datavencimentofatura = resultItem.vencimento;
-    // fatura.valorenergiaeletricafatura = resultItem.valorEnergiaEletrica;
-    fatura.qtdkwhenergiaeletricafatura = resultItem.quantidadeEnergiaEletrica;
-    // fatura.precounitenergiaeletricafatura = resultItem.precoUnitEnergiaEletrica;
-    // fatura.valorenergiainjetadafatura = resultItem.valorEnergiaHFP;
-    // fatura.qtdkwhenergiainjetadafatura = resultItem.quantidadeEnergiaHFP;
-    // fatura.precounitenergiainjetadafatura = resultItem.precoUnitEnergiaHFP;
-    // fatura.valorenergiacompensadafatura = resultItem.valorEnergiaCompSemICMS;
-    // fatura.qtdkwhenergiacompensadafatura = resultItem.quantidadeEnergiaCompSemICMS;
-    // fatura.precounitenergiacompensadafatura = resultItem.precoUnitEnergiaCompSemICMS;
-    // fatura.valoriluminacaopublicafatura = resultItem.valorEnergiaPublica;
-    // fatura.valortotalfatura = resultItem.valorEnergiaTotal;
+    fatura.mesfatura = resultItem.mesDeReferencia;
+    fatura.datavencimentofatura = resultItem.vencimento;
+    fatura.valorenergiaeletricafatura = resultItem.valorEnergiaEletrica.replace(/,/g, '');
+    fatura.qtdkwhenergiaeletricafatura = resultItem.quantidadeEnergiaEletrica.replace(/\./g, '');
+    fatura.precounitenergiaeletricafatura = resultItem.precoUnitEnergiaEletrica.replace(/,/g, '');
+    fatura.valorenergiainjetadafatura = resultItem.valorEnergiaHFP.replace(/,/g, '');
+    fatura.qtdkwhenergiainjetadafatura = resultItem.quantidadeEnergiaHFP.replace(/\./g, '');
+    fatura.precounitenergiainjetadafatura = resultItem.precoUnitEnergiaHFP.replace(/,/g, '');
+    fatura.valorenergiacompensadafatura = resultItem.valorEnergiaCompSemICMS.replace(/,/g, '');
+    fatura.qtdkwhenergiacompensadafatura = resultItem.quantidadeEnergiaCompSemICMS.replace(/\./g, '');
+    fatura.precounitenergiacompensadafatura = resultItem.precoUnitEnergiaCompSemICMS.replace(/,/g, '');
+    fatura.valoriluminacaopublicafatura = resultItem.valorEnergiaPublica.replace(/,/g, '');
+    fatura.valortotalfatura = resultItem.valorEnergiaTotal.replace(/,/g, '');
 
     // // Salvar a instância da entidade no banco de dados
     await this.faturaService.create(fatura);
