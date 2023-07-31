@@ -33,7 +33,7 @@ import { UnidadeController } from './unidade/unidade.controller'
       synchronize: false, // Sincroniza automaticamente o esquema do banco de dados com as entidades (somente para desenvolvimento)
       entities: [Cliente, Fatura, Unidade],
       logging: true,
-      schema: 'dblumi',
+      // schema: 'dblumi',
     }),
     TypeOrmModule.forFeature([Cliente, Fatura, Unidade])
   ],
