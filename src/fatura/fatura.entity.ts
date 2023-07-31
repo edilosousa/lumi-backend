@@ -8,7 +8,7 @@ export class Fatura {
   @PrimaryGeneratedColumn({ name: 'idfatura', type: 'int4' })
   idfatura: number;
 
-  @Column({ name: 'uccliente', type: 'bigint' })
+  @Column({ name: 'uccliente', type: 'int4' })
   uccliente: number;
 
   @Column({ name: 'mesfatura', type: 'varchar' })

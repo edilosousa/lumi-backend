@@ -23,18 +23,18 @@ export class FaturaController {
   @UseInterceptors(AnyFilesInterceptor())
   @HttpCode(200)
   async uploadFiles(@UploadedFiles() pdfFiles: Express.Multer.File[]): Promise<{message: string}> {
-    // const storagePath = path.resolve(process.cwd(), 'uploads');
-    // console.log(storagePath);
-    // if (!fs.existsSync(storagePath)) {
-    //   fs.mkdirSync(storagePath, { recursive: true });
-    // }
-    // const uploadedFilesPaths = [];
-    // for (const pdfFile of pdfFiles) {
-    //   const uniqueFileName = `${pdfFile.originalname}`;
-    //   const filePath = path.join(storagePath, uniqueFileName);
-    //   fs.writeFileSync(filePath, pdfFile.buffer);
-    //   uploadedFilesPaths.push(filePath);
-    // }
+    const storagePath = path.resolve(process.cwd(), 'uploads');
+    console.log(storagePath);
+    if (!fs.existsSync(storagePath)) {
+      fs.mkdirSync(storagePath, { recursive: true });
+    }
+    const uploadedFilesPaths = [];
+    for (const pdfFile of pdfFiles) {
+      const uniqueFileName = `${pdfFile.originalname}`;
+      const filePath = path.join(storagePath, uniqueFileName);
+      fs.writeFileSync(filePath, pdfFile.buffer);
+      uploadedFilesPaths.push(filePath);
+    }
     await this.lerPDF()
     return { message: 'Success' };
   }
